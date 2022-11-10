@@ -12,12 +12,12 @@ class Presenter {
     fun increment(){
         model.increment()
         view.showNewCount((model.count))
-        view.showToast(model.count)
+        view.showToast()
     }
     fun decrement(){
         model.decrement()
         view.showNewCount((model.count))
-        view.showToast(model.count)
+        view.showToast()
 
     }
 

@@ -34,12 +34,6 @@ class MainActivity : AppCompatActivity(), CounterView {
             incrementBtn.setOnClickListener {
                 presenter.increment()
 
-                if (resultTv.getText() == "10") {
-                    Toast.makeText(applicationContext,"Поздравляю",Toast.LENGTH_SHORT).show()
-
-                }else if(resultTv.getText() == "15") {
-                    resultTv.setTextColor(Color.parseColor("#4CAF50"))
-                }
                     decrementBtn.setOnClickListener {
                         presenter.decrement()
                     }
@@ -54,9 +48,11 @@ class MainActivity : AppCompatActivity(), CounterView {
 
     override fun showNewCount(count: Int) {
         binding.resultTv.text = count.toString()
-    }
-
-    override fun showToast(count: Int) {
 
     }
+
+    override fun showToast() {
+        Toast.makeText(this,"Поздравляю",Toast.LENGTH_LONG).show()
+    }
+
 }
