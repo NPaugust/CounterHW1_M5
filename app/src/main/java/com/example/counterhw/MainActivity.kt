@@ -1,58 +1,59 @@
 package com.example.counterhw
 
-import android.graphics.Color
+import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.counterhw.databinding.ActivityMainBinding
 import com.example.counterhw.helper.Injector
+
 import com.example.counterhw.presenter.Presenter
 import com.example.counterhw.view.CounterView
-import com.google.android.material.internal.ContextUtils.getActivity
 
-class MainActivity : AppCompatActivity(), CounterView {
+class MainActivity : AppCompatActivity(),CounterView {
 
-
-
-    lateinit var binding: ActivityMainBinding
-    private val presenter = Injector.getPresenter()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var presenter: Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter = Injector.getPresenter()
         presenter.attachView(this)
-        initClickears()
+        initClickers()
     }
 
-    private fun initClickears() {
-        with(binding) {
+    private fun initClickers() {
+        with(binding){
             incrementBtn.setOnClickListener {
                 presenter.increment()
-
-                    decrementBtn.setOnClickListener {
-                        presenter.decrement()
-                    }
-
+            }
+            decrementBtn.setOnClickListener {
+                presenter.decrement()
             }
         }
-
-
-
-
     }
 
     override fun showNewCount(count: Int) {
         binding.resultTv.text = count.toString()
-
     }
 
     override fun showToast() {
-        Toast.makeText(this,"Поздравляю",Toast.LENGTH_LONG).show()
+        this.showToast("Поздравляю!")
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    override fun standardColor() {
+        binding.resultTv.setTextColor(getColor(R.color.black))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    override fun textColor() {
+        binding.resultTv.setTextColor(getColor(R.color.green))
+    }
 }
